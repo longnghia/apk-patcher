@@ -7,7 +7,7 @@ import fs from "fs";
 import { Listr } from "listr2";
 import readline from "node:readline/promises";
 import path from "path";
-import { parse_aapt } from "./helpers.js";
+import { ignoreList, parse_aapt } from "./helpers.js";
 import { error, info, log, success } from "./log.js";
 
 const CONFIG_PATH = path.join(import.meta.dirname, "config.json");
@@ -155,16 +155,7 @@ program
               await execa("git", ["init"], { cwd: projectDir });
               await fs.promises.writeFile(
                 `${projectDir}/.gitignore`,
-                [
-                  "*",
-                  "!AndroidManifest.xml",
-                  "!res/values",
-                  "!smali*/",
-                  "!smali*/**",
-                  "smali/androidx/",
-                  "smali/com/android/",
-                  "smali/com/google/",
-                ].join("\n")
+                ignoreList.join("\n")
               );
               await execa("git", ["add", "."], { cwd: projectDir });
               await execa("git", ["commit", "-m", "init project"], {

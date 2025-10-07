@@ -16,3 +16,16 @@ export function parse_aapt(dumpResult, apkPath) {
     throw new Error("Can not parse apk info");
   }
 }
+
+export const ignoreList = [
+  "*",
+  "!AndroidManifest.xml",
+  "!res/",
+  "!res/values/",
+  "!res/values/*",
+  "!smali*/",
+  "!smali*/**",
+  "smali/androidx/",
+  "smali/com/android/",
+  "smali/com/google/",
+];
