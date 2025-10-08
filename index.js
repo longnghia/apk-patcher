@@ -9,6 +9,7 @@ import readline from "node:readline/promises";
 import path from "path";
 import { ignoreList, parse_aapt } from "./helpers.js";
 import { error, info, log, success } from "./log.js";
+import pkg from "./package.json" with { type: "json" };
 
 const CONFIG_PATH = path.join(import.meta.dirname, "config.json");
 
@@ -45,7 +46,7 @@ const program = new Command();
 program
   .name("apk patcher")
   .description("CLI for patching apk")
-  .version("1.0.3");
+  .version(pkg.version);
 
 var packageName;
 var versionName;
