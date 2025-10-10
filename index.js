@@ -176,7 +176,17 @@ program
           },
           {
             title: "Open in Editor",
-            task: () => execa(EDITOR, [projectDir]),
+            exitOnError: false,
+            task: async () => {
+              try {
+                await execa("which", [EDITOR]);
+                execa(EDITOR, [projectDir]);
+              } catch {
+                throw new Error(
+                  `Editor "${EDITOR}" not found in PATH. Please set the EDITOR environment variable or update your config.`
+                );
+              }
+            },
           },
           {
             title: "Perform first build & install",
